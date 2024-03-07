@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display Shoe Model</title>
+  <style>
+    body { margin: 0; }
+    canvas { width: 200px; height: 300px; }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+
+  <script>
+    // Setup Three.js scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, 200 / 300, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('canvas') });
+    renderer.setSize(200, 300);
+
+    // Load shoe model
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+      'shoe.glb',
+      function (gltf) {
+        scene.add(gltf.scene);
+      },
+      undefined,
+      function (error) {
+        console.error('Failed to load GLTF model:', error);
+      }
+    );
+
+    // Set up camera position
+    camera.position.z = 5;
+
+    // Render loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
